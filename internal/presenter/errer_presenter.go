@@ -3,8 +3,8 @@ package presenter
 import "net/http"
 
 type IErrerPresenter interface {
-	BadRequest(w http.ResponseWriter, err error) error
-	MethodNotAllowed(w http.ResponseWriter) error
+	BadRequest(w http.ResponseWriter, err error)
+	MethodNotAllowed(w http.ResponseWriter)
 }
 
 type ErrerPresenter struct {
