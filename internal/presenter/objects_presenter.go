@@ -9,8 +9,8 @@ import (
 )
 
 type IObjectsPresenter interface {
-	GetObjectByID(w http.ResponseWriter, output *output.GetObjectByID) error
-	PutObject(w http.ResponseWriter) error
+	GetObjectByID(w http.ResponseWriter, output *output.GetObjectByID)
+	PutObject(w http.ResponseWriter)
 }
 
 type ObjectsPresenter struct {
@@ -20,20 +20,15 @@ func NewObjectsPresenter() *ObjectsPresenter {
 	return &ObjectsPresenter{}
 }
 
-func (p *ObjectsPresenter) GetObjectByID(w http.ResponseWriter, output *output.GetObjectByID) error {
+func (p *ObjectsPresenter) GetObjectByID(w http.ResponseWriter, output *output.GetObjectByID) {
 	response := api.GetObjectResponse{
-		ObjectID: output.Object.ID,
 		Data:     string(output.Object.Data),
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	outputJSON, _ := json.Marshal(response)
 
-	// JSON形式でレスポンスを返す
-	if err := json.NewEncoder(w).Encode(response); err != nil {
-		return err
-	}
-	return nil
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(outputJSON)
 }
 
 func (p *ObjectsPresenter) PutObject(w http.ResponseWriter) {
