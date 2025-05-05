@@ -3,7 +3,7 @@ package presenter
 import "net/http"
 
 type IErrerPresenter interface {
-	BadRequest(w http.ResponseWriter, err error)
+	BadRequest(w http.ResponseWriter)
 	MethodNotAllowed(w http.ResponseWriter)
 }
 
