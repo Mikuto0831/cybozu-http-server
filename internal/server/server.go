@@ -19,9 +19,9 @@ func StartServer() {
 		Handler: mux,
 	}
 
-	l.Info("Starting server on :8000")
+	l.Info("Starting server on %s", server.Addr)
 
 	if err := server.ListenAndServe(); err != nil {
-		panic(err)
+		l.Error("Failed to start server: %v", err)
 	}
 }
