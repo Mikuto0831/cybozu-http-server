@@ -2,22 +2,22 @@ package presenter
 
 import "net/http"
 
-type IErrerPresenter interface {
+type IErrorPresenter interface {
 	BadRequest(w http.ResponseWriter)
 	MethodNotAllowed(w http.ResponseWriter)
 }
 
-type ErrerPresenter struct {
+type ErrorPresenter struct {
 }
 
-func NewErrerPresenter() *ErrerPresenter {
-	return &ErrerPresenter{}
+func NewErrorPresenter() *ErrorPresenter {
+	return &ErrorPresenter{}
 }
 
-func (p *ErrerPresenter) BadRequest(w http.ResponseWriter){
-	w.WriteHeader(http.StatusBadRequest)
+func (p *ErrorPresenter) BadRequest(w http.ResponseWriter){
+	w.WriteHeader(http.StatusNotFound)
 }
 
-func (p *ErrerPresenter) MethodNotAllowed(w http.ResponseWriter) {
+func (p *ErrorPresenter) MethodNotAllowed(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusMethodNotAllowed)
 }
