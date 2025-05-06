@@ -34,9 +34,13 @@ func NewObjectsController() *ObjectsController {
 }
 
 func (c *ObjectsController) GetObjectByID(w http.ResponseWriter, r *http.Request) {
+	c.logger.Info("GetObjectByID called")
+
 	if r.Method != http.MethodGet {
 		// GETメソッド以外は405 Method Not Allowedを返す
 		c.errorPresenter.MethodNotAllowed(w)
+
+		c.logger.Error("Method Not Allowed")
 		return
 	}
 
@@ -44,6 +48,7 @@ func (c *ObjectsController) GetObjectByID(w http.ResponseWriter, r *http.Request
 
 	if err != nil {
 		c.errorPresenter.NotFound(w)
+		c.logger.Error("Invalid ID: %s", err.Error())
 		return
 	}
 
@@ -51,9 +56,12 @@ func (c *ObjectsController) GetObjectByID(w http.ResponseWriter, r *http.Request
 		ID: objectId,
 	}
 
+	c.logger.Info("request id: %s", input.ID)
+
 	object, err := c.objectsUsecase.GetObjectByID(input.ID)
 	if err != nil {
 		c.errorPresenter.NotFound(w)
+		c.logger.Error("Object not found: %s", input.ID)
 		return
 	}
 
@@ -61,13 +69,18 @@ func (c *ObjectsController) GetObjectByID(w http.ResponseWriter, r *http.Request
 		Object: object,
 	}
 
+	c.logger.Info("response data: %s", string(outputObject.Object.Data))
+
 	c.objectsPresenter.GetObjectByID(w, outputObject)
 }
 
 func (c *ObjectsController) PutObject(w http.ResponseWriter, r *http.Request) {
+	c.logger.Info("PutObject called")
 	if r.Method != http.MethodPut {
 		// PUTメソッド以外は405 Method Not Allowedを返す
 		c.errorPresenter.MethodNotAllowed(w)
+
+		c.logger.Error("Method Not Allowed")
 		return
 	}
 	
@@ -75,6 +88,7 @@ func (c *ObjectsController) PutObject(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		c.errorPresenter.NotFound(w)
+		c.logger.Error("Invalid ID: %s", err.Error())
 		return
 	}
 
@@ -89,8 +103,11 @@ func (c *ObjectsController) PutObject(w http.ResponseWriter, r *http.Request) {
 	err = c.objectsUsecase.PutObject(input.ID, input.Data)
 	if err != nil {
 		c.errorPresenter.NotFound(w)
+		c.logger.Error("Failed to add object. id: %s, data: %s, error: %s", input.ID, string(input.Data), err.Error())
 		return
 	}
+
+	c.logger.Info("Object added successfully. id: %s, data: %s", input.ID, string(input.Data))
 
 	c.objectsPresenter.PutObject(w)
 }

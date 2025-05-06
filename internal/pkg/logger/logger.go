@@ -6,8 +6,8 @@ import (
 )
 
 type ILogger interface {
-	Info(msg string, args ...interface{})
-	Error(msg string, args ...interface{})
+	Info(format string, args ...interface{})
+	Error(format string, args ...interface{})
 }
 
 type Logger struct {
@@ -20,10 +20,10 @@ func NewLogger(prefix string) *Logger {
 
 func (l *Logger) Info(format string, args ...interface{}) {
     message := fmt.Sprintf(format, args...)
-    log.Printf("[INFO] %s %s", l.prefix, message)
+    log.Printf("[INFO] %s : %s", l.prefix, message)
 }
 
 func (l *Logger) Error(format string, args ...interface{}) {
     message := fmt.Sprintf(format, args...)
-    log.Printf("[ERROR] %s %s", l.prefix, message)
+    log.Printf("[ERROR] %s : %s", l.prefix, message)
 }

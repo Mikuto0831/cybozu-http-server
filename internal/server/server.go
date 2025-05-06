@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/mikuto0831/cybozu-http-server/internal/infra"
 	"github.com/mikuto0831/cybozu-http-server/internal/pkg/logger"
@@ -19,9 +20,10 @@ func StartServer() {
 		Handler: mux,
 	}
 
-	l.Info("Starting server on :8000")
+	l.Info("Starting server on %s", server.Addr)
 
 	if err := server.ListenAndServe(); err != nil {
-		panic(err)
+		l.Error("Failed to start server: %v", err)
+		os.Exit(1)  
 	}
 }
