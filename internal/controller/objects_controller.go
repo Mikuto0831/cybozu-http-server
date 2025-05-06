@@ -43,7 +43,7 @@ func (c *ObjectsController) GetObjectByID(w http.ResponseWriter, r *http.Request
 	objectId, err := unit.IsValidID(path.Base(r.URL.Path))
 
 	if err != nil {
-		c.errorPresenter.BadRequest(w)
+		c.errorPresenter.NotFound(w)
 		return
 	}
 
@@ -53,7 +53,7 @@ func (c *ObjectsController) GetObjectByID(w http.ResponseWriter, r *http.Request
 
 	object, err := c.objectsUsecase.GetObjectByID(input.ID)
 	if err != nil {
-		c.errorPresenter.BadRequest(w)
+		c.errorPresenter.NotFound(w)
 		return
 	}
 
@@ -74,7 +74,7 @@ func (c *ObjectsController) PutObject(w http.ResponseWriter, r *http.Request) {
 	objectId, err := unit.IsValidID(path.Base(r.URL.Path))
 
 	if err != nil {
-		c.errorPresenter.BadRequest(w)
+		c.errorPresenter.NotFound(w)
 		return
 	}
 
@@ -88,7 +88,7 @@ func (c *ObjectsController) PutObject(w http.ResponseWriter, r *http.Request) {
 
 	err = c.objectsUsecase.PutObject(input.ID, input.Data)
 	if err != nil {
-		c.errorPresenter.BadRequest(w)
+		c.errorPresenter.NotFound(w)
 		return
 	}
 

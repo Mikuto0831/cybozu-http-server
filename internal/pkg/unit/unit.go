@@ -14,8 +14,8 @@ func IsValidID(id string) (string, error) {
 	}
 
 	// IDの長さを確認
-	if len(id) < 1 || len(id) > 10 {
-		return "", fmt.Errorf("ID length must be between 1 and 100 characters")
+	if len(id) > 10 {
+		return "", fmt.Errorf("ID length must be 10 characters or less")
 	}
 
 	return id, nil
