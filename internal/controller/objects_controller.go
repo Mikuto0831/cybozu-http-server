@@ -48,7 +48,7 @@ func (c *ObjectsController) GetObjectByID(w http.ResponseWriter, r *http.Request
 
 	if err != nil {
 		c.errorPresenter.NotFound(w)
-		c.logger.Error("Invalid ID: %s", objectId)
+		c.logger.Error("Invalid ID: %s", err.Error())
 		return
 	}
 
@@ -88,7 +88,7 @@ func (c *ObjectsController) PutObject(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		c.errorPresenter.NotFound(w)
-		c.logger.Error("Invalid ID: %s", objectId)
+		c.logger.Error("Invalid ID: %s", err.Error())
 		return
 	}
 
@@ -103,7 +103,7 @@ func (c *ObjectsController) PutObject(w http.ResponseWriter, r *http.Request) {
 	err = c.objectsUsecase.PutObject(input.ID, input.Data)
 	if err != nil {
 		c.errorPresenter.NotFound(w)
-		c.logger.Error("Failed to add object. id: %s, data: %s", input.ID, string(input.Data))
+		c.logger.Error("Failed to add object. id: %s, data: %s, error: %s", input.ID, string(input.Data), err.Error())
 		return
 	}
 
