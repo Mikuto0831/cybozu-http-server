@@ -28,6 +28,7 @@ func (p *ObjectsPresenter) GetObjectByID(w http.ResponseWriter, output *output.G
 	outputJSON, _ := json.Marshal(response)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	w.Write(outputJSON)
 }
 
